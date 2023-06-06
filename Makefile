@@ -5,7 +5,7 @@ CFLAGS = -Wall -g
 
 LIBS = -lsfml-window -lsfml-graphics -lsfml-system
 
-SRCS = main.cpp Application.cpp PointMass.cpp Spring.cpp
+SRCS = main.cpp Application.cpp PointMass.cpp Spring.cpp SoftBodyObject.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

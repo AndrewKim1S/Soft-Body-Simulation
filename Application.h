@@ -2,14 +2,14 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
 
-#include <vector>
 #include <cassert>
 
+#include "SoftBodyObject.h"
+/*
 #include "PointMass.h"
 #include "Spring.h"
-
+*/
 
 const int timeStep = 20;
 
@@ -43,9 +43,11 @@ class Application {
 
 				State state;
 
+				SoftBodyObject softbody;
+				/*
 				std::vector<PointMass> points;
 				std::vector<Spring> springs;
-
+				*/
 
 				bool stepNext;
 };

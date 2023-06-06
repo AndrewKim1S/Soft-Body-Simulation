@@ -62,15 +62,7 @@ void Application::run() {
 void Application::render() {
 
 		window->clear(sf::Color(32, 32, 32));
-
-		for(PointMass& p : points) {
-				p.render(window);
-		}
-
-		for(Spring& s : springs) {
-				s.render(window);
-		}
-
+		softbody.render(window);
 		window->display();
 }
 
@@ -109,14 +101,7 @@ void Application::pollEvents() {
 
 // update the application, quadtree & boids
 void Application::update() {
-		for(Spring& s : springs) {
-				s.update();
-		}
-
-		for(PointMass& p : points) {
-				p.update(10);
-		}
-
+		softbody.update();
 }
 
 // return the state of the window
@@ -125,6 +110,8 @@ bool Application::isRunning() {
 }
 
 void Application::createSoftBodyObject() {
+
+		softbody = SoftBodyObject(sf::Vector2f(400, 400));
 
 		/*
 		// Spring - Vertical
@@ -144,22 +131,8 @@ void Application::createSoftBodyObject() {
 		springs[0].setDefaultDistance(100);
 		*/
 
-		/*
-		// Small Square
-		points.emplace_back(PointMass(sf::Vector2f(400, 400), 1));
-		points.emplace_back(PointMass(sf::Vector2f(400, 500), 1));
-		points.emplace_back(PointMass(sf::Vector2f(500, 400), 1));
-		points.emplace_back(PointMass(sf::Vector2f(500, 500), 1));
-		springs.emplace_back(Spring(&points[0], &points[1]));
-		springs.emplace_back(Spring(&points[0], &points[2]));
-		springs.emplace_back(Spring(&points[0], &points[3]));
-		springs.emplace_back(Spring(&points[1], &points[2]));
-		springs.emplace_back(Spring(&points[1], &points[3]));
-		springs.emplace_back(Spring(&points[2], &points[3]));
-		*/
-
 		// Triangle
-		
+		/*
 		points.emplace_back(PointMass(sf::Vector2f(400, 400), 1));
 		points.emplace_back(PointMass(sf::Vector2f(550, 400), 1));
 		points.emplace_back(PointMass(sf::Vector2f(475, 529.9), 1));
@@ -167,5 +140,19 @@ void Application::createSoftBodyObject() {
 		springs.emplace_back(Spring(&points[0], &points[2]));
 		springs.emplace_back(Spring(&points[1], &points[2]));
 		springs[0].setDefaultDistance(50);
-		
+		*/
+
+		// Square
+		/*
+		points.emplace_back(PointMass(sf::Vector2f(300, 300), 1));
+		points.emplace_back(PointMass(sf::Vector2f(450, 300), 1));
+		points.emplace_back(PointMass(sf::Vector2f(300, 450), 1));
+		points.emplace_back(PointMass(sf::Vector2f(450, 450), 1));
+		springs.emplace_back(Spring(&points[0], &points[1]));
+		springs.emplace_back(Spring(&points[0], &points[2]));
+		springs.emplace_back(Spring(&points[0], &points[3]));
+		springs.emplace_back(Spring(&points[1], &points[2]));
+		springs.emplace_back(Spring(&points[1], &points[3]));
+		springs.emplace_back(Spring(&points[2], &points[3]));
+		*/
 }

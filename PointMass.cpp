@@ -23,13 +23,15 @@ void PointMass::update(float dt) {
 				return;
 		}
 
+		wallCollision();
+
 		sf::Vector2f nextPosition;
 
 		// Calculate total force acting on point
 		sf::Vector2f force(0, 0);
 		force.x += springForce.x;
 		force.y += springForce.y;
-		// force.y += 0.0008; // gravity
+		force.y += gravity; // gravity
 
 		// Acceleration
 		sf::Vector2f acceleration(0,0);
@@ -52,6 +54,27 @@ void PointMass::render(sf::RenderWindow* window) {
 		c.setRadius(radius);
 		c.setFillColor(sf::Color::White);
 		window->draw(c);
+}
+
+void PointMass::wallCollision() {
+		// bottom boundary collision
+		if(position.y > windowWidth - radius) {
+				position.y = windowWidth - radius;
+				springForce.y -= gravity;
+		}
+		// top boundary collision
+		else if(position.y < 0) {
+				position.y = 0 + radius;
+		}
+
+		// left boundary collision
+		if(position.x < 0) {
+				position.x = 0 + radius;
+		}
+		// right boundary collision
+		else if(position.x > windowLength) {
+				position.x = windowLength - radius;
+		}
 }
 
 sf::Vector2f PointMass::getPosition() {

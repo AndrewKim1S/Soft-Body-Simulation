@@ -5,7 +5,7 @@
 #include "PointMass.h"
 #include "math.h"
 
-const float springConstant = 0.00003;
+const float springConstant = 0.0005;
 const float dampeningConstant = 0.003;
 
 class Spring{
