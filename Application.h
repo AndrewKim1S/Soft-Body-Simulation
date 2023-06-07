@@ -50,4 +50,7 @@ class Application {
 				*/
 
 				bool stepNext;
+				bool dragging;
+
+				sf::Vector2i mousePoint;
 };

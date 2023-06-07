@@ -21,6 +21,7 @@ Application::Application(int width, int length) {
 		createSoftBodyObject();
 
 		stepNext = false;
+		dragging = false;
 }
 
 // Deconstructor
@@ -36,14 +37,6 @@ void Application::run() {
 						if(clock.getElapsedTime().asMilliseconds() > 10) {
 								pollEvents();
 								render();
-								/*
-								if(stepNext) {
-										stepNext = false;
-								} else {
-										return;
-								}
-								std::cout << "Updating ------------------" << std::endl;
-								*/
 								update();
 								clock.restart();
 						} else {
@@ -92,7 +85,22 @@ void Application::pollEvents() {
 								else if(event.key.code == sf::Keyboard::N) {
 										stepNext = true;
 								}
-
+						case sf::Event::MouseButtonPressed:
+								if(event.mouseButton.button == sf::Mouse::Left) {
+										dragging = true;
+										mousePoint = sf::Mouse::getPosition(*window);
+								}
+								break;
+						case sf::Event::MouseButtonReleased:
+								if(event.mouseButton.button == sf::Mouse::Left) {
+										dragging = false;
+								}
+								break;
+						case sf::Event::MouseMoved:
+								if(dragging) {
+										mousePoint = sf::Mouse::getPosition(*window);
+								}
+								break;
 						default:
 								break;
 				}
@@ -101,6 +109,9 @@ void Application::pollEvents() {
 
 // update the application, quadtree & boids
 void Application::update() {
+		if(dragging) {
+				softbody.dragObject(mousePoint);
+		}
 		softbody.update();
 }
 
@@ -113,46 +124,4 @@ void Application::createSoftBodyObject() {
 
 		softbody = SoftBodyObject(sf::Vector2f(400, 400));
 
-		/*
-		// Spring - Vertical
-		points.emplace_back(PointMass(sf::Vector2f(500, 500), 1));
-		// points[0].setFixedPoint(true);
-		points.emplace_back(PointMass(sf::Vector2f(500, 650), 1));
-		springs.emplace_back(Spring(&points[0], &points[1]));
-		springs[0].setDefaultDistance(100);
-		*/
-
-		/*
-		// Spring - Angled
-		// points[0].setFixedPoint(true);
-		points.emplace_back(PointMass(sf::Vector2f(500, 500), 1));
-		points.emplace_back(PointMass(sf::Vector2f(560, 350), 1));
-		springs.emplace_back(Spring(&points[0], &points[1]));
-		springs[0].setDefaultDistance(100);
-		*/
-
-		// Triangle
-		/*
-		points.emplace_back(PointMass(sf::Vector2f(400, 400), 1));
-		points.emplace_back(PointMass(sf::Vector2f(550, 400), 1));
-		points.emplace_back(PointMass(sf::Vector2f(475, 529.9), 1));
-		springs.emplace_back(Spring(&points[0], &points[1]));
-		springs.emplace_back(Spring(&points[0], &points[2]));
-		springs.emplace_back(Spring(&points[1], &points[2]));
-		springs[0].setDefaultDistance(50);
-		*/
-
-		// Square
-		/*
-		points.emplace_back(PointMass(sf::Vector2f(300, 300), 1));
-		points.emplace_back(PointMass(sf::Vector2f(450, 300), 1));
-		points.emplace_back(PointMass(sf::Vector2f(300, 450), 1));
-		points.emplace_back(PointMass(sf::Vector2f(450, 450), 1));
-		springs.emplace_back(Spring(&points[0], &points[1]));
-		springs.emplace_back(Spring(&points[0], &points[2]));
-		springs.emplace_back(Spring(&points[0], &points[3]));
-		springs.emplace_back(Spring(&points[1], &points[2]));
-		springs.emplace_back(Spring(&points[1], &points[3]));
-		springs.emplace_back(Spring(&points[2], &points[3]));
-		*/
 }

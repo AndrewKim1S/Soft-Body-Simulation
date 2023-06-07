@@ -6,7 +6,7 @@
 #include "math.h"
 
 const float springConstant = 0.0005;
-const float dampeningConstant = 0.003;
+const float dampeningConstant = 0.005;
 
 class Spring{
 

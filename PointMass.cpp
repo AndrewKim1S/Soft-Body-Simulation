@@ -12,6 +12,8 @@ PointMass::PointMass(sf::Vector2f pos, float mass) {
 		fixedPoint = false;
 		springForce.x = 0;
 		springForce.y = 0;
+		outsideForce.x = 0;
+		outsideForce.y = 0;
 }
 
 PointMass::~PointMass() {
@@ -31,7 +33,9 @@ void PointMass::update(float dt) {
 		sf::Vector2f force(0, 0);
 		force.x += springForce.x;
 		force.y += springForce.y;
-		force.y += gravity; // gravity
+		// force.y += gravity; // gravity
+		force.x += outsideForce.x;
+		force.y += outsideForce.y;
 
 		// Acceleration
 		sf::Vector2f acceleration(0,0);
@@ -43,6 +47,8 @@ void PointMass::update(float dt) {
 		
 		springForce.x = 0;
 		springForce.y = 0;
+		outsideForce.x = 0;
+		outsideForce.y = 0;
 
 		prevPosition = position;
 		position = nextPosition;
@@ -60,6 +66,7 @@ void PointMass::wallCollision() {
 		// bottom boundary collision
 		if(position.y > windowWidth - radius) {
 				position.y = windowWidth - radius;
+				// Add normal force
 				springForce.y -= gravity;
 		}
 		// top boundary collision
@@ -84,6 +91,11 @@ sf::Vector2f PointMass::getPosition() {
 void PointMass::setSpringForce(float x, float y) {
 		springForce.x += x;
 		springForce.y += y;
+}
+
+void PointMass::setForce(float x, float y) {
+		outsideForce.x += x;
+		outsideForce.y += y;
 }
 
 void PointMass::debugInfo() {

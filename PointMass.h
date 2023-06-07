@@ -5,7 +5,7 @@
 
 const float radius = 5;
 const float dampening = 0.8;
-const float gravity = 0.005;
+const float gravity = 0.009;
 const float windowWidth = 900;
 const float windowLength = 1500;
 
@@ -21,7 +21,8 @@ class PointMass{
 				void wallCollision();
 				sf::Vector2f getPosition();
 				void setSpringForce(float x, float y);
-				
+				void setForce(float x, float y);
+
 				void debugInfo();
 
 				void setFixedPoint(bool fixed);
@@ -33,6 +34,7 @@ class PointMass{
 				sf::Vector2f velocity;
 
 				sf::Vector2f springForce;
+				sf::Vector2f outsideForce;
 
 				float mass;
 
